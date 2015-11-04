@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".MainActivity">
+
+    <item android:id="@+id/action_user"
+          android:title="User"
+          android:orderInCategory="101"
+          android:showAsAction="always"
+          android:icon="@drawable/avatar_empty"/>
+
+
+        <item android:id="@+id/action_attach_Photo"
+              android:title="Photo"
+              android:icon="@drawable/ic_attach_file"
+              android:showAsAction="always"
+              android:orderInCategory="100"/>
+
+    <!--<item android:id="@+id/action_logout"-->
+          <!--android:title="@string/menu_logout_label"-->
+          <!--android:orderInCategory="100"-->
+          <!--app:showAsAction="never"/>-->
+    <!--<item android:id="@+id/action_friends"-->
+          <!--android:title="@string/menu_friends_label"-->
+          <!--android:orderInCategory="100"-->
+          <!--app:showAsAction="never"/>-->
+</menu>

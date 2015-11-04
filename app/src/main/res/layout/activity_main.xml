@@ -1,0 +1,79 @@
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/activityContent">
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/lstMessages"
+        android:transcriptMode="alwaysScroll"
+        android:layout_alignParentTop="false"
+        android:layout_above="@+id/editLayout"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="true"
+        android:background="@color/background"
+        android:listSelector="@android:color/transparent"
+        android:divider="@null"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editLayout"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:paddingTop="5dp"
+        android:paddingBottom="1dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:background="@color/primary_light"
+        android:gravity="right">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/messageField"
+            android:layout_toLeftOf="@+id/btnSend"
+            android:layout_alignParentTop="true"
+            android:layout_alignBottom="@+id/btnSend"
+            android:hint="@string/message_field_hint"
+            android:maxLines="3"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:imeOptions="actionSend"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnSend"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:background="@color/accent"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:text="@string/send_button_text"
+            android:textSize="14sp"/>
+    </LinearLayout>
+</RelativeLayout>
+    <ListView android:id="@+id/left_drawer"
+              android:layout_width="240dp"
+              android:layout_height="match_parent"
+              android:layout_gravity="start"
+              android:choiceMode="singleChoice"
+              android:divider="@android:color/transparent"
+              android:dividerHeight="0dp"
+              android:background="@color/background"
+              android:layout_alignParentTop="true"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true"
+              android:listSelector="@drawable/side_bar_selector"/>
+</android.support.v4.widget.DrawerLayout>

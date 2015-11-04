@@ -1,0 +1,17 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="TwinChatTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/TwinChatTheme.ActionBarStyle</item>
+    </style>
+    <style name="TwinChatTheme.ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/primary_dark</item>
+    </style>
+
+    <style name="Widget.ActionButton.Overflow" parent="@android:style/Widget.Holo.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_attach_file</item>
+    </style>
+    <style name="AppTheme" parent="TwinChatTheme">
+        <item name="android:actionOverflowButtonStyle">@style/Widget.ActionButton.Overflow</item>
+    </style>
+</resources>

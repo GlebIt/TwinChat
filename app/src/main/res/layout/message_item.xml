@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contentLayout"
+        android:orientation="vertical"
+        android:background="@drawable/in_message_bg"
+        android:layout_alignParentLeft="true">
+        <!--android:layout_gravity="right">-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/userNameLabel"
+        android:gravity="right"
+        android:paddingRight="10dp"
+        android:textSize="8sp"
+        android:text="asdasd"
+        android:textColor="@color/secondary_text"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/messageTextView"
+        android:textSize="20sp"
+        android:paddingRight="10dp"
+        android:gravity="right"
+        android:text="124125"
+        android:textColor="@color/primary_text"/>
+    </LinearLayout>
+
+    <!--<ImageView-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:id="@+id/avatarImageView"-->
+        <!--android:src="@drawable/avatar_empty"-->
+        <!--android:layout_toRightOf="@+id/contentLayout"/>-->
+</RelativeLayout>
