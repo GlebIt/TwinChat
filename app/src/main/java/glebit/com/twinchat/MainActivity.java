@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
@@ -18,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,8 +35,12 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class MainActivity extends Activity
@@ -40,9 +48,13 @@ public class MainActivity extends Activity
 
     protected static final String TAG=MainActivity.class.getSimpleName();
 
+    public static final int TAKE_PHOTO_REQUEST=0;
+    public static final int PICK_PHOTO_REQUEST=2;
+
     protected ListView mMessageListView;
     protected Button mSendButton;
     protected EditText mMessageField;
+    protected ImageView mSendImageView;
     protected List<ParseObject> mMessages;
     protected ParseUser mCurrentUser;
     protected ParseUser mUserFriend;
@@ -50,6 +62,7 @@ public class MainActivity extends Activity
     protected DrawerLayout mDrawerLayout;
     protected ListView mDrawerList;
     protected ActionBarDrawerToggle mDrawerToggle;
+    protected Uri mMediaUri;
 
     protected DialogInterface.OnClickListener mDialogListener=new DialogInterface.OnClickListener()
     {
@@ -60,28 +73,62 @@ public class MainActivity extends Activity
             {
                 case 0:
                     // TODO: Take picture
-//                    Intent takePhotoIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    mMediUri=getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-//                    if(mMediUri==null)
-//                    {
-//                        Toast.makeText(MainActivity.this, R.string.error_external_storage,
-//                                Toast.LENGTH_LONG).show();
-//                    }
-//                    else
-//                    {
-//                        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediUri);
-//                        startActivityForResult(takePhotoIntent, TAKE_PHOTO_REQUEST);
-//                    }
+                    Intent takePhotoIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    mMediaUri=getOutputMediaFileUri();
+                    if(mMediaUri==null)
+                    {
+                        Toast.makeText(MainActivity.this, R.string.error_external_storage,
+                                Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+                        startActivityForResult(takePhotoIntent, TAKE_PHOTO_REQUEST);
+                    }
                     break;
                 case 1:
-                    // TODO: Choose picture
-//                    Intent choosePhotoIntent=new Intent(Intent.ACTION_GET_CONTENT);
-//                    choosePhotoIntent.setType("image/*");
-//                    startActivityForResult(choosePhotoIntent, PICK_PHOTO_REQUEST);
+                    Intent choosePhotoIntent=new Intent(Intent.ACTION_GET_CONTENT);
+                    choosePhotoIntent.setType("image/*");
+                    startActivityForResult(choosePhotoIntent, PICK_PHOTO_REQUEST);
                     break;
             }
         }
     };
+
+    private Uri getOutputMediaFileUri()
+    {
+        if(isExternalStorageAvailable())
+        {
+            String appName=MainActivity.this.getString(R.string.app_name);
+            File mediaStorageDir=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    appName);
+
+            if(!mediaStorageDir.exists())
+            {
+                if(!mediaStorageDir.mkdir())
+                {
+                    Log.e(TAG, "Faild to create directory");
+                    return null;
+                }
+            }
+
+            File mediaFile;
+            Date now=new Date();
+            String timestamp=new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(now);
+
+            String path=mediaStorageDir.getPath()+File.separator;
+
+            mediaFile=new File(path+"IMG_"+timestamp+".jpg");
+
+            Log.d(TAG, "File:"+Uri.fromFile(mediaFile));
+
+            return Uri.fromFile(mediaFile);
+        }
+        else
+        {
+            return null;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -89,6 +136,7 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mSendImageView=(ImageView)findViewById(R.id.sendImageView);
         mDrawerLayout=(DrawerLayout)findViewById(R.id.drawer_layout);
         mDrawerList=(ListView)findViewById(R.id.left_drawer);
 
@@ -157,6 +205,20 @@ public class MainActivity extends Activity
         catch (ParseException e)
         {
             Log.e(TAG, e.getMessage());
+        }
+    }
+
+    private boolean isExternalStorageAvailable()
+    {
+        String state= Environment.getExternalStorageState();
+
+        if(state.equals(Environment.MEDIA_MOUNTED))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -291,6 +353,37 @@ public class MainActivity extends Activity
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode==RESULT_OK)
+        {
+            if(requestCode==PICK_PHOTO_REQUEST)
+            {
+                if(data==null)
+                {
+                    Toast.makeText(this, R.string.general_error, Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    mMediaUri=data.getData();
+                    Intent sendPhotoIntent=new Intent(this, SendPhotoActivity.class);
+                    sendPhotoIntent.setData(mMediaUri);
+                    startActivity(sendPhotoIntent);
+//                    mMediaUri=data.getData();
+//                    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//                    mediaScanIntent.setData(mMediaUri);
+//                    sendBroadcast(mediaScanIntent);
+//                    mSendImageView.setImageURI(mMediaUri);
+                }
+
+            }
+
+        }
     }
 
     private void navigateToFriends()

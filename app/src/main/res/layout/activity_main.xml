@@ -21,6 +21,13 @@
         android:listSelector="@android:color/transparent"
         android:divider="@null"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sendImageView"
+        android:layout_alignBottom="@+id/lstMessages"
+        android:layout_alignParentLeft="true"/>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

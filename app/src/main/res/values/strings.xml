@@ -25,8 +25,13 @@
     <string name="alert_dialog_title">Sorry!</string>
     <string name="drawerOpen">Drawer open</string>
     <string name="drawerClose">Drawer close</string>
+    <string name="error_external_storage">External storage error.</string>
+    <string name="general_error">Sorry, there was an error.</string>
     <string-array name="camera_choises">
         <item>Take Picture</item>
         <item>Choose Picture</item>
     </string-array>
+    <string name="title_activity_send_photo">SendPhotoActivity</string>
+    <string name="btn_cancel_text">Cancel</string>
+    <string name="btn_send_text">Send</string>
 </resources>
