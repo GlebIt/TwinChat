@@ -50,6 +50,7 @@ public class MainActivity extends Activity
 
     public static final int TAKE_PHOTO_REQUEST=0;
     public static final int PICK_PHOTO_REQUEST=2;
+    public static final int MEDIA_TYPE_IMAGE=4;
 
     protected ListView mMessageListView;
     protected Button mSendButton;
@@ -371,18 +372,25 @@ public class MainActivity extends Activity
                 else
                 {
                     mMediaUri=data.getData();
-                    Intent sendPhotoIntent=new Intent(this, SendPhotoActivity.class);
-                    sendPhotoIntent.setData(mMediaUri);
-                    startActivity(sendPhotoIntent);
-//                    mMediaUri=data.getData();
-//                    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-//                    mediaScanIntent.setData(mMediaUri);
-//                    sendBroadcast(mediaScanIntent);
-//                    mSendImageView.setImageURI(mMediaUri);
                 }
-
+            }
+            else if(requestCode==TAKE_PHOTO_REQUEST)
+            {
+                if(data==null)
+                {
+                    Toast.makeText(this, R.string.general_error, Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                    mediaScanIntent.setData(mMediaUri);
+                    sendBroadcast(mediaScanIntent);
+                }
             }
 
+            Intent sendPhotoIntent=new Intent(this, SendPhotoActivity.class);
+            sendPhotoIntent.setData(mMediaUri);
+            startActivity(sendPhotoIntent);
         }
     }
 

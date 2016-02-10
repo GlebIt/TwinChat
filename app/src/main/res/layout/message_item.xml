@@ -30,13 +30,19 @@
         android:paddingRight="10dp"
         android:gravity="right"
         android:text="124125"
-        android:textColor="@color/primary_text"/>
+        android:textColor="@color/primary_text"
+        android:layout_margin="0dp"/>
+    <ImageView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/pictureImageView"
+        android:layout_margin="0dp"/>
     </LinearLayout>
 
     <!--<ImageView-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_width="wrap_content"-->
-        <!--android:id="@+id/avatarImageView"-->
+        <!--android:id="@+id/pictureImageView"-->
         <!--android:src="@drawable/avatar_empty"-->
         <!--android:layout_toRightOf="@+id/contentLayout"/>-->
 </RelativeLayout>

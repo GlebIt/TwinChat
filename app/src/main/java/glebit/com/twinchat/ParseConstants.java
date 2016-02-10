@@ -16,5 +16,6 @@ public final class ParseConstants
     public static final String KEY_MESSAGE_TEXT="text";
     public static final String KEY_CREATED_AT="createdAt";
     public static final String KEY_USER_AVATAR="user_avatar";
+    public static final String KEY_FILE="file";
 
 }

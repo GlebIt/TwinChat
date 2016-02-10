@@ -10,8 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -42,6 +44,7 @@ public class MessageAdapter extends ArrayAdapter
             holder.messageTextView = (TextView) convertView.findViewById(R.id.messageTextView);
             holder.userNameLabel=(TextView)convertView.findViewById(R.id.userNameLabel);
             holder.contentLayout=(LinearLayout)convertView.findViewById(R.id.contentLayout);
+            holder.pictureImageView=(ImageView)convertView.findViewById(R.id.pictureImageView);
             convertView.setTag(holder);
         }
         else
@@ -50,6 +53,12 @@ public class MessageAdapter extends ArrayAdapter
         }
 
         ParseObject message=mMessages.get(position);
+        ParseFile image=message.getParseFile(ParseConstants.KEY_FILE);
+
+        if(image!=null)
+            Picasso.with(mContext).load(image.getUrl()).resize(300, 300).into(holder.pictureImageView);
+        else
+            holder.pictureImageView.setImageBitmap(null);
 
         holder.userNameLabel.setText(message.getString(ParseConstants.KEY_SENDER_NAME));
         String msgText=message.getString(ParseConstants.KEY_MESSAGE_TEXT);
@@ -98,7 +107,7 @@ public class MessageAdapter extends ArrayAdapter
         TextView messageTextView;
         TextView userNameLabel;
         LinearLayout contentLayout;
-        ImageView avatarImageView;
+        ImageView pictureImageView;
     }
 
     public void refill(List<ParseObject> messages)
