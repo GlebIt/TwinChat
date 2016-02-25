@@ -79,13 +79,7 @@ public class SignUpActivity extends ActionBarActivity
 
             if(userName.isEmpty()||password.isEmpty()||eMail.isEmpty())
             {
-                AlertDialog.Builder builder=new AlertDialog.Builder(SignUpActivity.this);
-                builder.setMessage(getString(R.string.signup_error_message))
-                        .setTitle(getString(R.string.signup_error_title))
-                        .setPositiveButton(android.R.string.ok, null);
-
-                AlertDialog dialog=builder.create();
-                dialog.show();
+                showErrorMessage(getString(R.string.signup_error_message));
             }
             else
             {
@@ -112,17 +106,22 @@ public class SignUpActivity extends ActionBarActivity
                         }
                         else
                         {
-                            AlertDialog.Builder builder=new AlertDialog.Builder(SignUpActivity.this);
-                            builder.setMessage(e.getMessage())
-                                    .setTitle(getString(R.string.signup_error_title))
-                                    .setPositiveButton(android.R.string.ok, null);
-
-                            AlertDialog dialog=builder.create();
-                            dialog.show();
+                            showErrorMessage(e.getMessage());
                         }
                     }
                 });
             }
         }
     };
+
+    private void showErrorMessage(String message)
+    {
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setTitle(getString(R.string.signup_error_title))
+                .setPositiveButton(android.R.string.ok, null);
+
+        AlertDialog dialog=builder.create();
+        dialog.show();
+    }
 }

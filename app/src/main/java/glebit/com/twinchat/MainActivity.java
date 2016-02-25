@@ -73,7 +73,6 @@ public class MainActivity extends Activity
             switch (which)
             {
                 case 0:
-                    // TODO: Take picture
                     Intent takePhotoIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     mMediaUri=getOutputMediaFileUri();
                     if(mMediaUri==null)
@@ -108,7 +107,7 @@ public class MainActivity extends Activity
             {
                 if(!mediaStorageDir.mkdir())
                 {
-                    Log.e(TAG, "Faild to create directory");
+                    Log.e(TAG, getString(R.string.external_storage_error));
                     return null;
                 }
             }
@@ -325,7 +324,7 @@ public class MainActivity extends Activity
                     @Override
                     public void done(ParseException e) {
                         if(e==null) {
-                            Toast.makeText(MainActivity.this, "Message sent", Toast.LENGTH_LONG);
+                            Toast.makeText(MainActivity.this, getString(R.string.message_sent), Toast.LENGTH_LONG);
                             mMessages.add(message);
                             mMessageAdapter.notifyDataSetChanged();
                             mMessageField.setText("");

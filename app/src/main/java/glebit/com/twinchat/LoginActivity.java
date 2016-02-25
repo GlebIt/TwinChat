@@ -99,13 +99,7 @@ public class LoginActivity extends Activity
 
             if(userName.isEmpty()||password.isEmpty())
             {
-                AlertDialog.Builder builder=new AlertDialog.Builder(LoginActivity.this);
-                builder.setMessage(getString(R.string.login_error_message))
-                        .setTitle(getString(R.string.login_error_title))
-                        .setPositiveButton(android.R.string.ok, null);
-
-                AlertDialog dialog=builder.create();
-                dialog.show();
+                showLoginError(getString(R.string.login_error_message));
             }
             else
             {
@@ -146,17 +140,22 @@ public class LoginActivity extends Activity
                         }
                         else
                         {
-                            AlertDialog.Builder builder=new AlertDialog.Builder(LoginActivity.this);
-                            builder.setMessage(e.getMessage())
-                                    .setTitle(getString(R.string.login_error_title))
-                                    .setPositiveButton(android.R.string.ok, null);
-
-                            AlertDialog dialog=builder.create();
-                            dialog.show();
+                            showLoginError(e.getMessage());
                         }
                     }
                 });
             }
+        }
+
+        private void showLoginError(String message)
+        {
+            AlertDialog.Builder builder=new AlertDialog.Builder(LoginActivity.this);
+            builder.setMessage(message)
+                    .setTitle(getString(R.string.login_error_title))
+                    .setPositiveButton(android.R.string.ok, null);
+
+            AlertDialog dialog=builder.create();
+            dialog.show();
         }
     };
 }

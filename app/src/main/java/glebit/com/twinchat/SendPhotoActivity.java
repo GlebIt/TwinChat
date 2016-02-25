@@ -53,7 +53,6 @@ public class SendPhotoActivity extends ActionBarActivity
         mediaScanIntent.setData(mMediaUri);
         sendBroadcast(mediaScanIntent);
         Picasso.with(this).load(mMediaUri).into(mPhotoImageView);
-//        mPhotoImageView.setImageURI(mMediaUri);
 
         mCurrentUser=ParseUser.getCurrentUser();
 
@@ -99,28 +98,10 @@ public class SendPhotoActivity extends ActionBarActivity
 
                 fileBytes = FileHelper.reduceImageForUpload(fileBytes);
 
-                 String fileName = FileHelper.getFileName(this, mMediaUri, "image");
-                 ParseFile file = new ParseFile(fileName, fileBytes);
+                String fileName = FileHelper.getFileName(this, mMediaUri, "image");
+                ParseFile file = new ParseFile(fileName, fileBytes);
 
-                 message.put(ParseConstants.KEY_FILE, file);
-
-//                if (fileBytes == null)
-//                {
-//                    return null;
-//                } else
-//                {
-//                    if (mFileType.equals(ParseConstants.TYPE_IMAGE))
-//                    {
-//                        fileBytes = FileHelper.reduceImageForUpload(fileBytes);
-//                    }
-//
-//                    String fileName = FileHelper.getFileName(this, mMediaUri, mFileType);
-//                    ParseFile file = new ParseFile(fileName, fileBytes);
-//
-//                    message.put(ParseConstants.KEY_FILE, file);
-//
-//                    //return message;
-//                }
+                message.put(ParseConstants.KEY_FILE, file);
 
                 message.saveInBackground(new SaveCallback()
                 {
